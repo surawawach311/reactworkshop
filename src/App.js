@@ -8,6 +8,7 @@ import Footster from './components/Footster';
 import About from './pages/About';
 import NotFound from './pages/NotFound';
 import Register from './pages/Register';
+import Shop from './pages/Shop';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
           <Route exact path="/home" component={Home} />
           <Route exact path="/about/" component={About} />
           <Route exact path="/register" component={Register} />
+          <Route exact path="/shop/:id" component={Shop} />
+
           <Route component={NotFound} />
         </Switch>
       </main>

@@ -2,6 +2,13 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { Spinner } from 'react-bootstrap'
+import { Link } from "react-router-dom";
+import { faList } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
+const menus = <FontAwesomeIcon icon={faList} />
+
 export default class Home extends Component {
     CancelToken = axios.CancelToken;
     source = this.CancelToken.source();
@@ -75,6 +82,11 @@ export default class Home extends Component {
                                             <div className="card-body">
                                                 <h3 className="card-title">
                                                     {shop.name}
+                                                    <Link className="btn btn-info"
+                                                        to={
+                                                            { pathname: '/shop/' + shop.id }
+                                                        }>Menu {menus}
+                                                    </Link>
                                                 </h3>
                                             </div>
                                         </div>

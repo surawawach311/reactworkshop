@@ -4,10 +4,12 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-boots
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
-
+// const iconMenu = <FontAwesomeIcon icon={clipboard-list} />
 const element = <FontAwesomeIcon icon={faCoffee} />
+
 const NavBar = () => {
     return (
+
         <Navbar bg="success" variant='dark' expand="lg">
             <Navbar.Brand href="#home"> สั่งทุกอย่าง Online {element}</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -15,9 +17,13 @@ const NavBar = () => {
                 <Nav className="mr-auto">
                     <NavLink className="nav-link" exact={true} activeClassName="active" to="/">
                         Home
+
                     </NavLink>
                     <NavLink className="nav-link" activeClassName="active" to="/about">
                         About
+                    </NavLink>
+                    <NavLink className="nav-link" activeClassName="active" to="/shop">
+                        Shop
                     </NavLink>
                     <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
@@ -26,9 +32,10 @@ const NavBar = () => {
                         <NavDropdown.Divider />
                         <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
                     </NavDropdown>
-                    <NavLink className="nav-link primary" activeClassName="active" to="/register">
+                    <NavLink className="nav-link" activeClassName="active" to="/register">
                         Register
                     </NavLink>
+
                 </Nav>
                 <Form inline>
                     <FormControl type="text" placeholder="Search" className="mr-sm-2" />
