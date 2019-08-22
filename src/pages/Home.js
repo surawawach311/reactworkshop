@@ -1,17 +1,37 @@
 //rcc
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import { Spinner } from 'react-bootstrap'
 export default class Home extends Component {
+    CancelToken = axios.CancelToken;
+    source = this.CancelToken.source();
+
     state = {
-        shop: []
+        shops: [],
+        loading: true
     }
     async getData() {
-        const response = await axios.get('https://surawach-mern-backend.herokuapp.com/api/shop');
-        console.log(response.data.data);
+        try {
+            const response = await axios.get('https://surawach-mern-backend.herokuapp.com/api/shop', {
+                cancelToken: this.source.token
+            });
+            this.setState({
+                shops: response.data.data,
+                loading: false
+            });
+        } catch (error) {
+            if (axios.isCancel(error)) {
+                console.log('home cancelled');
+            } else {
+                console.log(error);
+            }
+        }
     }
     componentDidMount() {
         this.getData();
+    }
+    componentWillUnmount() {
+        this.source.cancel();
     }
     render() {
         return (
@@ -24,23 +44,45 @@ export default class Home extends Component {
                     </div>
                 </div>
                 <div className="container">
+                    <div className="row">
+                        <div className="col-md-12 text-center">
+                            {
+                                this.state.loading === true && (
+                                    <>
+                                        <Spinner animation="grow" variant="primary" />
+                                        <Spinner animation="grow" variant="secondary" />
+                                        <Spinner animation="grow" variant="success" />
+                                        <Spinner animation="grow" variant="danger" />
+                                        <Spinner animation="grow" variant="warning" />
+                                        <Spinner animation="grow" variant="info" />
+                                        <Spinner animation="grow" variant="light" />
+                                        <Spinner animation="grow" variant="dark" />
+                                    </>
+                                )
+                            }
+                        </div>
+                    </div>
                     {/* Example row of columns */}
                     <div className="row">
-                        <div className="col-md-4">
-                            <h2>Heading</h2>
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                            <p><a className="btn btn-secondary" href="#" role="button">View details »</a></p>
-                        </div>
-                        <div className="col-md-4">
-                            <h2>Heading</h2>
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
-                            <p><a className="btn btn-secondary" href="#" role="button">View details »</a></p>
-                        </div>
-                        <div className="col-md-4">
-                            <h2>Heading</h2>
-                            <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                            <p><a className="btn btn-secondary" href="#" role="button">View details »</a></p>
-                        </div>
+
+                        {
+                            this.state.shops.map((shop) => {
+                                return (
+                                    <div className="col-md-4" key={shop.id}>
+                                        <div className="card mb-3">
+                                            <img src={shop.photo} className="card-img-top"
+                                                height="225" alt={shop.name} />
+                                            <div className="card-body">
+                                                <h3 className="card-title">
+                                                    {shop.name}
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
                     </div>
                     <hr />
                 </div>
