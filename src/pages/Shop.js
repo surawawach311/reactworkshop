@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+// import { Card } from 'react-bootstrap'
 export default class Shop extends Component {
     state = {
         shop: {},
@@ -22,6 +23,19 @@ export default class Shop extends Component {
         return (
             <>
                 <div className="container">
+                    {/* <Card style={{ width: '18rem' }}>
+                        <card.body>
+                            <card.title>Card Title</card.title>
+                            <card.subtitle classname="mb-2 text-muted">Card Subtitle</card.subtitle>
+                            <card.text>
+                                Some quick example text to build on the card title and make up the bulk of
+                                the card's content.
+                            </card.text>
+                            <card.link href="#">Card Link</card.link>
+                            <card.link href="#">Another Link</card.link>
+                        </card.body>
+                    </Card> */}
+
                     <div className="row my-5">
                         <div className="col-md-12">
                             <h2>{this.state.shop.name}</h2>

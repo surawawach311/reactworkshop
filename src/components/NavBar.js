@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-boots
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
 import { NavLink } from 'react-router-dom';
+import Login from './Login';
 // const iconMenu = <FontAwesomeIcon icon={clipboard-list} />
 const element = <FontAwesomeIcon icon={faCoffee} />
 
@@ -37,10 +38,7 @@ const NavBar = () => {
                     </NavLink>
 
                 </Nav>
-                <Form inline>
-                    <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-                    <Button variant="outline-danger ">Search</Button>
-                </Form>
+                <Login />
             </Navbar.Collapse>
         </Navbar>
     )
