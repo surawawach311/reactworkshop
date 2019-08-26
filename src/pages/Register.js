@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import axios from 'axios';
-import { async } from 'q';
 
 const RegisterSchema = Yup.object().shape({
     name: Yup.string().required('Required'),

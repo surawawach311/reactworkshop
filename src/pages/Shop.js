@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-// import { Card } from 'react-bootstrap'
-export default class Shop extends Component {
+import { addToCart } from '../redux/actions/cartAction';
+import { connect } from 'react-redux';
+
+class Shop extends Component {
     state = {
         shop: {},
         menus: [],
@@ -10,6 +12,18 @@ export default class Shop extends Component {
             lgn: 0
         }
     }
+
+    addToCart = (menu) => {
+        const item = {
+            id: menu._id,
+            name: menu.name,
+            price: menu.price.$numberDecimal,
+            qty: 1
+
+        }
+        this.props.dispatch(addToCart(item, this.props.cart));
+    }
+
     async componentDidMount() {
         const id = this.props.match.params.id;
         const response = await axios.get('https://surawach-mern-backend.herokuapp.com/api/shop/' + id)
@@ -23,31 +37,18 @@ export default class Shop extends Component {
         return (
             <>
                 <div className="container">
-                    {/* <Card style={{ width: '18rem' }}>
-                        <card.body>
-                            <card.title>Card Title</card.title>
-                            <card.subtitle classname="mb-2 text-muted">Card Subtitle</card.subtitle>
-                            <card.text>
-                                Some quick example text to build on the card title and make up the bulk of
-                                the card's content.
-                            </card.text>
-                            <card.link href="#">Card Link</card.link>
-                            <card.link href="#">Another Link</card.link>
-                        </card.body>
-                    </Card> */}
-
                     <div className="row my-5">
                         <div className="col-md-12">
                             <h2>{this.state.shop.name}</h2>
                             <ul className="list-unstyled">
                                 {this.state.menus.map((menu) => {
                                     return (
-                                        <div className="col-md-12 card">
-                                            <li className="media-body" key={menu._id}>
+                                        <div className="col-md-12 card" key={menu._id}>
+                                            <li className="media-body" >
                                                 <h5 className="mt-0 mb-1">{menu.name}</h5>
                                                 <p>ราคา: {menu.price.$numberDecimal} บาท</p>
                                                 <div>
-                                                    <button className="btn btn-success">Buy</button>
+                                                    <button className="btn btn-success" onClick={() => { this.addToCart(menu) }}>Buy</button>
                                                 </div>
                                             </li>
                                         </div>
@@ -62,3 +63,9 @@ export default class Shop extends Component {
         )
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        cart: state.cartReducer.cart
+    }
+}
+export default connect(mapStateToProps)(Shop);
